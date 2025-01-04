@@ -56,3 +56,36 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error :(" });
   }
 };
+
+export const findUsers = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  try {
+    const user = await userModel.findById(id);
+    const hobbies = user.hobbies;
+    const users = await userModel.find({ hobbies: { $in: hobbies } });
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "" });
+  }
+};
+
+export const searchUsers = async (req: Request, res: Response) => {
+  const { searchText } = req.query;
+  try {
+    const users = await userModel.find({
+      $or: [
+        { name: { $regex: searchText, $options: "i" } }, // Case-insensitive search in name
+        { email: { $regex: searchText, $options: "i" } }, // Case-insensitive search in email
+      ],
+    });
+    if (users.length == 0) {
+      res.status(200).json([]);
+      return;
+    }
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error :(" });
+  }
+};
