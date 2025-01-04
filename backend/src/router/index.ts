@@ -6,3 +6,4 @@ export const router = Router();
 router.route("/register");
 router.route("/login");
 router.use(VerifyJWT);
+router.route("/users").get();
