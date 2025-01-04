@@ -71,14 +71,16 @@ export const findUsers = async (req: Request, res: Response) => {
 };
 
 export const searchUsers = async (req: Request, res: Response) => {
-  const { searchText } = req.query;
+  const { searchText, limit } = req.query;
   try {
-    const users = await userModel.find({
-      $or: [
-        { name: { $regex: searchText, $options: "i" } }, // Case-insensitive search in name
-        { email: { $regex: searchText, $options: "i" } }, // Case-insensitive search in email
-      ],
-    });
+    const users = await userModel
+      .find({
+        $or: [
+          { name: { $regex: searchText, $options: "i" } }, // Case-insensitive search in name
+          { email: { $regex: searchText, $options: "i" } }, // Case-insensitive search in email
+        ],
+      })
+      .limit(limit);
     if (users.length == 0) {
       res.status(200).json([]);
       return;

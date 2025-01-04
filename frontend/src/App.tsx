@@ -1,12 +1,25 @@
 import "./App.css";
-import { Button } from "./components/ui/button";
-
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/Home";
+import List from "./pages/List";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Toaster } from "sonner";
 function App() {
   return (
-    <div>
-      <p className="text-red-600 font-xl">Hello there from Arpit Blagan</p>
-      <Button>Check</Button>
-    </div>
+    <Router>
+      <Toaster position="bottom-right" />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/searchlist" element={<List />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
