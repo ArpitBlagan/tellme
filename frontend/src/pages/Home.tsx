@@ -2,8 +2,10 @@ import { MarqueeDemo } from "@/components/Demo";
 
 import { Button } from "@/components/ui/button";
 import Ripple from "@/components/ui/ripple";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="min-h-[90vh] relative  flex items-center justify-center">
@@ -18,7 +20,14 @@ const Home = () => {
             with shared interests, and grow your social circle effortlessly.
           </p>
           <div className="flex items-center justify-center">
-            <Button>Enter the world of Findy 😄</Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/register");
+              }}
+            >
+              Enter the world of Findy 😄
+            </Button>
           </div>
         </div>
       </div>
